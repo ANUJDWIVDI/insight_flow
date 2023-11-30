@@ -1,0 +1,155 @@
+<!--This is a demo for the speech to text api-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Speech-to-Text</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 1em;
+        }
+
+        button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 0.5em 1em;
+            margin: 1em;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #resultContainer {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1em;
+            margin: 1em;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.5em;
+            margin-top: 0.5em;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-top: auto;
+        }
+
+        #endMeetingLink {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Demo Speech-to-Text</h1>
+    </header>
+
+    <button id="convertButton">Convert Voice to Text</button>
+
+    <div id="resultContainer">
+        <label for="resultText">Converted Text:</label>
+        <textarea id="resultText" rows="4" cols="50" readonly></textarea>
+        <!-- End Meeting link -->
+        <a href="/end_meeting">End Meeting</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const convertButton = document.getElementById('convertButton');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultText = document.getElementById('resultText');
+            const endMeetingLink = document.getElementById('endMeetingLink');
+
+            convertButton.addEventListener('click', function () {
+                startSpeechRecognition();
+            });
+
+            function startSpeechRecognition() {
+                const recognition = new webkitSpeechRecognition() || SpeechRecognition();
+                recognition.lang = 'en-US';
+                recognition.interimResults = true;
+
+                recognition.onresult = function (event) {
+                    const result = event.results[event.results.length - 1][0].transcript;
+                    resultText.value = result;
+
+                    // Show the result container
+                    resultContainer.style.display = 'block';
+
+                    // Show the End Meeting link
+                    endMeetingLink.style.display = 'block';
+
+                    // Send the converted text to Python server
+                    sendTextDataToPython(result);
+                };
+
+                recognition.onend = function () {
+                    // Additional logic after recognition ends
+                };
+
+                recognition.start();
+            }
+
+            function sendTextDataToPython(textData) {
+                fetch('/process_text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ textData }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Server response:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
