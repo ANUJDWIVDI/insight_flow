@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <!-- Add Digital Samba Embedded SDK script -->
+    <script crossorigin src="https://unpkg.com/@digitalsamba/embedded-sdk"></script>
+</head>
+<body>
+    <h2>Welcome to the Dashboard</h2>
+
+    <div id="samba-container"></div>
+<!-- Your existing dashboard.html content -->
+
+<h3>Speech to Text Conversion</h3>
+<form action="{{ url_for('speech_to_text') }}" method="post" enctype="multipart/form-data">
+    <label for="audio_file">Upload Audio File:</label>
+    <input type="file" name="audio_file" accept="audio/*" required>
+    <br>
+    <input type="submit" value="Convert to Text">
+</form>
+
+    <script>
+        // Initialize Digital Samba Embedded SDK
+        const sambaFrame = DigitalSambaEmbedded.createControl({ url: 'YOUR_ROOM_URL' });
+        sambaFrame.load();
+
+        // Add JavaScript listener for voice recording and speech-to-text
+        // Replace the following with your actual implementation
+        const startRecordingButton = document.createElement('button');
+        startRecordingButton.textContent = 'Start Recording';
+
+        startRecordingButton.addEventListener('click', async () => {
+            // Your logic to start recording voice
+
+            // Simulated voice recording
+            const audioData = await simulateVoiceRecording();
+
+            // Simulated speech-to-text conversion
+            const text = await simulateSpeechToTextConversion(audioData);
+
+            // Simulated document storage
+            saveTextToWordDocument(text);
+        });
+
+        document.body.appendChild(startRecordingButton);
+
+        // Placeholder functions for simulation
+        async function simulateVoiceRecording() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    console.log('Recording complete.');
+                    resolve('SimulatedAudioData');
+                }, 5000); // Simulating a 5-second recording
+            });
+        }
+
+        async function simulateSpeechToTextConversion(audioData) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    console.log('Speech-to-text conversion complete.');
+                    resolve('SimulatedTextData');
+                }, 3000); // Simulating a 3-second conversion
+            });
+        }
+
+        function saveTextToWordDocument(text) {
+            // Your logic to save text to a Word document
+            console.log('Text saved to Word document:', text);
+        }
+    </script>
+</body>
+</html>
