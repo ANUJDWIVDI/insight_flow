@@ -12,6 +12,7 @@ VALID_PASSWORD = '123'
 def login():
     # Uncomment if running demo
     # return render_template('speech-to-text-demo.html')
+    
     return render_template('login.html')
 
 @app.route('/dashboard', methods=['POST'])
