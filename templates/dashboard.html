@@ -3,73 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Futuristic App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
 
-    <!-- Add Digital Samba Embedded SDK script -->
-    <script crossorigin src="https://unpkg.com/@digitalsamba/embedded-sdk"></script>
+        header, footer {
+            padding: 10px;
+            background: #333;
+            text-align: center;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meeting-pane,
+        .recording-pane {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #00bfff;
+        }
+
+        /* Add more styling for a futuristic look */
+        .meeting-pane p,
+        .recording-pane p {
+            margin: 20px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .meeting-button,
+        .recording-button {
+            background-color: #00bfff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .meeting-button:hover,
+        .recording-button:hover {
+            background-color: #0080ff;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <h2>Welcome to the Dashboard</h2>
+    <header>
+        <h1>Insight Flow</h1>
+    </header>
 
-    <div id="samba-container"></div>
-<!-- Your existing dashboard.html content -->
+    <main>
+        <div class="meeting-pane">
+            <h2>Virtual Meeting</h2>
+            <p>Welcome to our futuristic virtual meeting space. Connect with others and explore the future together.</p>
+            <button class="meeting-button">Join Meeting</button>
+        </div>
 
-<h3>Speech to Text Conversion</h3>
-<form action="{{ url_for('speech_to_text') }}" method="post" enctype="multipart/form-data">
-    <label for="audio_file">Upload Audio File:</label>
-    <input type="file" name="audio_file" accept="audio/*" required>
-    <br>
-    <input type="submit" value="Convert to Text">
-</form>
+        <div class="recording-pane">
+            <h2>Record Your Voice</h2>
+            <p>Record your voice and experience our advanced speech-to-text conversion technology.</p>
+            <button class="recording-button">Start Recording</button>
+        </div>
+    </main>
 
-    <script>
-        // Initialize Digital Samba Embedded SDK
-        const sambaFrame = DigitalSambaEmbedded.createControl({ url: 'YOUR_ROOM_URL' });
-        sambaFrame.load();
-
-        // Add JavaScript listener for voice recording and speech-to-text
-        // Replace the following with your actual implementation
-        const startRecordingButton = document.createElement('button');
-        startRecordingButton.textContent = 'Start Recording';
-
-        startRecordingButton.addEventListener('click', async () => {
-            // Your logic to start recording voice
-
-            // Simulated voice recording
-            const audioData = await simulateVoiceRecording();
-
-            // Simulated speech-to-text conversion
-            const text = await simulateSpeechToTextConversion(audioData);
-
-            // Simulated document storage
-            saveTextToWordDocument(text);
-        });
-
-        document.body.appendChild(startRecordingButton);
-
-        // Placeholder functions for simulation
-        async function simulateVoiceRecording() {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    console.log('Recording complete.');
-                    resolve('SimulatedAudioData');
-                }, 5000); // Simulating a 5-second recording
-            });
-        }
-
-        async function simulateSpeechToTextConversion(audioData) {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    console.log('Speech-to-text conversion complete.');
-                    resolve('SimulatedTextData');
-                }, 3000); // Simulating a 3-second conversion
-            });
-        }
-
-        function saveTextToWordDocument(text) {
-            // Your logic to save text to a Word document
-            console.log('Text saved to Word document:', text);
-        }
-    </script>
+    <footer>
+        <p>&copy; 2023 Insight Flow App. All rights reserved.</p>
+    </footer>
 </body>
 </html>
