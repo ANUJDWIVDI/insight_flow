@@ -4,6 +4,25 @@ import os
 
 app = Flask(__name__)
 
+# Demo hat colours
+person_hat_colors = {
+    'Person 1': 'yellow',
+    'Person 2': 'green',
+    'Person 3': 'red',
+    'Person 4': 'blue',
+    'Person 5': 'white',
+    'Person 6': 'black'
+}
+
+person_chart_data = {
+    'Person 1': 100,
+    'Person 2': 100,
+    'Person 3': 100,
+    'Person 4': 100,
+    'Person 5': 100,
+    'Person 6': 100
+}
+
 # Simulated user credentials for demonstration purposes
 VALID_USERNAME = '123'
 VALID_PASSWORD = '123'
@@ -21,7 +40,7 @@ def dashboard():
     password = request.form.get('password')
 
     if username == VALID_USERNAME and password == VALID_PASSWORD:
-        return render_template('dashboard.html')
+        return render_template('dashboard.html', person_hat_colors=person_hat_colors, person_chart_data=person_chart_data)
     else:
         return redirect(url_for('login'))
 

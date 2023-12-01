@@ -114,12 +114,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Dummy data for the chart
+            // Use the data received from Flask to generate chart
             var chartData = {
-                labels: ['Person 1', 'Person 2', 'Person 3', 'Person 4', 'Person 5', 'Person 6'],
+                labels: [{% for person, _ in person_hat_colors.items() %}"{{ person }}", {% endfor %}],
                 datasets: [{
                     label: 'Thinking Hats',
-                    data: [2, 4, 1, 3, 5, 2], // Dummy data, you can replace it with your actual data
+                    data: [{% for _, value in person_chart_data.items() %}{{ value }}, {% endfor %}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.7)',
                         'rgba(54, 162, 235, 0.7)',
