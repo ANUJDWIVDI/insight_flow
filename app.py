@@ -37,6 +37,11 @@ def process_text():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Routing the speech to text demonstration
+@app.route('/speech_to_text', methods=['POST','GET'])
+def speech_to_text():
+    return render_template('speech_to_text.html')
+
 # Saves the text to a file
 def save_text_to_file(text):
     print('Saving text to file...')

@@ -82,13 +82,13 @@
         <div class="meeting-pane">
             <h2>Virtual Meeting</h2>
             <p>Welcome to our futuristic virtual meeting space. Connect with others and explore the future together.</p>
-            <button class="meeting-button">Join Meeting</button>
+            <a href="/meeting" class="meeting-button">Start a Meeting</a>
         </div>
 
         <div class="recording-pane">
             <h2>Record Your Voice</h2>
             <p>Record your voice and experience our advanced speech-to-text conversion technology.</p>
-            <button class="recording-button">Start Recording</button>
+            <a href="{{ url_for('speech_to_text') }}" class="recording-button">Start Recording</a>
         </div>
     </main>
 
