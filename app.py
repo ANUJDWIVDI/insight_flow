@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
 import tensorflow
 import os
 
@@ -43,6 +43,16 @@ def dashboard():
         return render_template('dashboard.html', person_hat_colors=person_hat_colors, person_chart_data=person_chart_data)
     else:
         return redirect(url_for('login'))
+
+# Route for the meeting page
+@app.route('/meeting', methods=['POST','GET'])  
+def meeting():
+    return render_template('meeting.html')
+
+# Route for returning icons for the meeting
+@app.route('/icons/<path:filename>')
+def serve_icon(filename):
+    return send_from_directory('static/icons', filename)
 
 # Receives text form the speech-to-text API
 @app.route('/process_text', methods=['POST'])
